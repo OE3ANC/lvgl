@@ -204,6 +204,13 @@ zephyr_library_sources(
 zephyr_library_sources_ifdef(CONFIG_LV_Z_USE_FILESYSTEM lvgl_fs.c)
 zephyr_library_sources_ifdef(CONFIG_LV_Z_MEM_POOL_SYS_HEAP lvgl_mem.c)
 
+if(CONFIG_LV_USE_DEMO_BENCHMARK)
+
+    file(GLOB_RECURSE benchmark_src ../demos/benchmark/*.c ../demos/benchmark/assets/*.c)
+    zephyr_library_sources(${benchmark_src})
+
+endif()
+
 zephyr_library_link_libraries(LVGL)
 target_link_libraries(LVGL INTERFACE zephyr_interface)
 
