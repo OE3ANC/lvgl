@@ -206,8 +206,36 @@ zephyr_library_sources_ifdef(CONFIG_LV_Z_MEM_POOL_SYS_HEAP lvgl_mem.c)
 
 if(CONFIG_LV_USE_DEMO_BENCHMARK)
 
-    file(GLOB_RECURSE benchmark_src ../demos/benchmark/*.c ../demos/benchmark/assets/*.c)
-    zephyr_library_sources(${benchmark_src})
+    file(GLOB_RECURSE demo_benchmark_src ../demos/benchmark/*.c ../demos/benchmark/assets/*.c)
+    zephyr_library_sources(${demo_benchmark_src})
+
+endif()
+
+if(CONFIG_LV_USE_DEMO_KEYPAD_AND_ENCODER)
+
+    file(GLOB_RECURSE demo_keypad_encoder_src ../demos/keypad_encoder/*.c ../demos/keypad_encoder/assets/*.c)
+    zephyr_library_sources(${demo_keypad_encoder_src})
+
+endif()
+
+if(CONFIG_LV_USE_DEMO_MUSIC)
+
+    file(GLOB_RECURSE demo_music_src ../demos/music/*.c ../demos/music/assets/*.c)
+    zephyr_library_sources(${demo_music_src})
+
+endif()
+
+if(CONFIG_LV_USE_DEMO_STRESS)
+
+    file(GLOB_RECURSE demo_stress_src ../demos/stress/*.c ../demos/stress/assets/*.c)
+    zephyr_library_sources(${demo_stress_src})
+
+endif()
+
+if(CONFIG_LV_USE_DEMO_WIDGETS)
+
+    file(GLOB_RECURSE demo_widgets_src ../demos/widgets/*.c ../demos/widgets/assets/*.c)
+    zephyr_library_sources(${demo_widgets_src})
 
 endif()
 
