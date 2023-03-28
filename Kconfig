@@ -125,6 +125,11 @@ menu "LVGL configuration"
             help
                 Used to initialize default sizes such as widgets sized, style paddings.
                 (Not so important, you can adjust it to modify default sizes and spaces)
+        config LV_PIXEL_ALIGN_SIZE
+            int "Pixels to align"
+            default 1
+            help
+               Pixels to align
     endmenu
 
     menu "Feature configuration"

@@ -26,7 +26,7 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 		break;
 	case PIXEL_FORMAT_RGB_888:
 		disp_drv->flush_cb = lvgl_flush_cb_24bit;
-		disp_drv->rounder_cb = NULL;
+		disp_drv->rounder_cb = lvgl_rounder_cb_24bit;
 		disp_drv->set_px_cb = lvgl_set_px_cb_24bit;
 		break;
 	case PIXEL_FORMAT_RGB_565:
