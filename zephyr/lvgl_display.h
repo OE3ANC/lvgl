@@ -41,6 +41,7 @@ void lvgl_rounder_cb_mono(lv_disp_drv_t *disp_drv, lv_area_t *area);
 int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv);
 
 void lvgl_rounder_cb_24bit(struct _lv_disp_drv_t * disp_drv, lv_area_t * area);
+void lvgl_rounder_cb_16bit(struct _lv_disp_drv_t * disp_drv, lv_area_t * area);
 #ifdef __cplusplus
 }
 #endif

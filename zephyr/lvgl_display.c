@@ -32,7 +32,7 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 	case PIXEL_FORMAT_RGB_565:
 	case PIXEL_FORMAT_BGR_565:
 		disp_drv->flush_cb = lvgl_flush_cb_16bit;
-		disp_drv->rounder_cb = NULL;
+		disp_drv->rounder_cb = lvgl_rounder_cb_16bit;
 #ifdef CONFIG_LV_COLOR_DEPTH_16
 		disp_drv->set_px_cb = NULL;
 #else

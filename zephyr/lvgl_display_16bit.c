@@ -34,3 +34,19 @@ void lvgl_set_px_cb_16bit(lv_disp_drv_t *disp_drv,
 	*buf_xy = lv_color_to16(color);
 }
 #endif
+
+void lvgl_rounder_cb_16bit(struct _lv_disp_drv_t *disp_drv, lv_area_t *area)
+{
+	if (disp_drv->rotated == LV_DISP_ROT_90 || disp_drv->rotated == LV_DISP_ROT_270) {
+		area->y1 = ROUND_DOWN(area->y1, 4);
+		area->y2 = ROUND_UP(area->y2, 4) - 1;
+		area->x1 = ROUND_DOWN(area->x1, 4);
+		area->x2 = ROUND_UP(area->x2, 4) - 1;
+	} else if (disp_drv->rotated == LV_DISP_ROT_NONE){
+		area->x1 = ROUND_DOWN(area->x1, 4);
+		area->x2 = ROUND_UP(area->x2, 4) - 1;
+	} else if (disp_drv->rotated == LV_DISP_ROT_180) {
+		area->x1 = ROUND_DOWN(area->x1, 4);
+		area->x2 = ROUND_UP(area->x2, 4) - 1;
+	}
+}

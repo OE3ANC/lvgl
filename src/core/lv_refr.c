@@ -917,6 +917,7 @@ static void draw_buf_rotate(lv_area_t * area, lv_color_t * color_p)
         lv_coord_t row = 0;
         while(row < area_h) {
             lv_coord_t height = LV_MIN(max_row, area_h - row);
+            height = height / 4 * 4;
             draw_buf->flushing = 1;
             if((row == 0) && (area_h >= area_w)) {
                 /*Rotate the initial area as a square*/
