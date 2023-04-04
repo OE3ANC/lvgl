@@ -38,9 +38,9 @@ static lv_disp_draw_buf_t disp_buf;
  * uint16_t * or uint32_t *, therefore buffer needs to be aligned accordingly to
  * prevent unaligned memory accesses.
  */
-static uint8_t buf0[BUFFER_SIZE] __aligned(4);
+static uint8_t __attribute__((section(".psram_section"))) buf0[BUFFER_SIZE] __aligned(4);
 #ifdef CONFIG_LV_Z_DOUBLE_VDB
-static uint8_t buf1[BUFFER_SIZE] __aligned(4);
+static uint8_t __attribute__((section(".psram_section"))) buf1[BUFFER_SIZE] __aligned(4);
 #endif
 
 #endif /* CONFIG_LV_Z_BUFFER_ALLOC_STATIC */
@@ -347,8 +347,10 @@ static int lvgl_init(const struct device *dev)
 
 	lv_disp_drv_init(&disp_drv);
 	disp_drv.user_data = (void *) display_dev;
-	disp_drv.sw_rotate = 1;
+	// disp_drv.sw_rotate = 1;
 	disp_drv.rotated = LV_DISP_ROT_90;
+	/* 如果需要全屏刷，需要将CONFIG_LV_Z_VDB_SIZE配置为100，且将disp_drv.full_refresh设置为1 */
+	// disp_drv.full_refresh = 1;
 
 	err = lvgl_allocate_rendering_buffers(&disp_drv);
 	if (err != 0) {
