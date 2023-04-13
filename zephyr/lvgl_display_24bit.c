@@ -51,11 +51,6 @@ void lvgl_set_px_cb_24bit(lv_disp_drv_t *disp_drv,
 
 void lvgl_rounder_cb_24bit(struct _lv_disp_drv_t *disp_drv, lv_area_t *area)
 {
-#define ROUND_UP(x, align)                                                                         \
-	(((unsigned long)(x) + ((unsigned long)(align)-1)) & ~((unsigned long)(align)-1))
-
-#define ROUND_DOWN(x, align) ((unsigned long)(x) & ~((unsigned long)(align)-1))
-
 	area->x1 = ROUND_DOWN(area->x1, CONFIG_LV_PIXEL_ALIGN_SIZE);
 	area->x2 = ROUND_UP(area->x2, CONFIG_LV_PIXEL_ALIGN_SIZE) - 1;
 }
