@@ -14,7 +14,7 @@
 #define HEAP_BYTES (CONFIG_LV_Z_MEM_POOL_MAX_SIZE * \
 		    CONFIG_LV_Z_MEM_POOL_NUMBER_BLOCKS)
 
-static char lvgl_heap_mem[HEAP_BYTES] __aligned(8);
+static char __attribute__((section(".psram_section"))) lvgl_heap_mem[HEAP_BYTES] __aligned(8);
 static struct sys_heap lvgl_heap;
 static struct k_spinlock lvgl_heap_lock;
 
