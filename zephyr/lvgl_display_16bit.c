@@ -8,10 +8,44 @@
 #include <lvgl.h>
 #include "lvgl_display.h"
 
+struct flush_msq
+{
+	lv_area_t area;
+	lv_color_t *color_p;
+	struct device *display_dev;
+	lv_disp_drv_t *disp_drv;
+};
+
+#ifndef CONFIG_LV_Z_DOUBLE_VDB
+K_MSGQ_DEFINE(flush_msgq, sizeof(struct flush_msq), 2, 4);
+
+void flush_thread(void *p1, void *p2, void *p3)
+{
+	struct flush_msq msg;
+	while (1) {
+		k_msgq_get(&flush_msgq, &msg, K_FOREVER);
+		uint16_t w = msg.area.x2 - msg.area.x1 + 1;
+		uint16_t h = msg.area.y2 - msg.area.y1 + 1;
+		struct display_buffer_descriptor desc;
+
+		desc.buf_size = w * 2U * h;
+		desc.width = w;
+		desc.pitch = w;
+		desc.height = h;
+		// printk("display_write\n");
+		display_write(msg.display_dev, msg.area.x1, msg.area.y1, &desc,
+			      (void *)msg.color_p);
+	}
+}
+
+K_THREAD_DEFINE(flush_thread_id, 2048, flush_thread, NULL, NULL, NULL, 0, 0, 0);
+#endif
+
 void lvgl_flush_cb_16bit(lv_disp_drv_t *disp_drv,
 		const lv_area_t *area, lv_color_t *color_p)
 {
 	const struct device *display_dev = (const struct device *)disp_drv->user_data;
+#if !CONFIG_LV_Z_DOUBLE_VDB
 	uint16_t w = area->x2 - area->x1 + 1;
 	uint16_t h = area->y2 - area->y1 + 1;
 	struct display_buffer_descriptor desc;
@@ -21,8 +55,23 @@ void lvgl_flush_cb_16bit(lv_disp_drv_t *disp_drv,
 	desc.pitch = w;
 	desc.height = h;
 	display_write(display_dev, area->x1, area->y1, &desc, (void *) color_p);
-
 	lv_disp_flush_ready(disp_drv);
+#else
+	struct flush_msq msg;
+	memcmp(&msg.area, area, sizeof(lv_area_t));
+
+	msg.area.x1 = area->x1;
+	msg.area.x2 = area->x2;
+	msg.area.y1 = area->y1;
+	msg.area.y2 = area->y2;
+
+	msg.display_dev = display_dev;
+	msg.color_p = color_p;
+	msg.disp_drv = disp_drv;
+
+	k_msgq_put(&flush_msgq, &msg, K_FOREVER);
+	lv_disp_flush_ready(disp_drv);
+#endif
 }
 
 #ifndef CONFIG_LV_COLOR_DEPTH_16
