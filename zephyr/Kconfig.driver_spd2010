@@ -1,0 +1,12 @@
+config LV_Z_DRIVER_SPD2010
+    bool "lvgl zephyr driver spd2010"
+    default n
+    help
+       lvgl zephyr driver spd2010
+
+config LV_Z_DRIVER_SPD2010_THREAD_PRIORITY
+    int "lvgl zephyr driver spd2010 thread priority"
+    default 0
+    depends on LV_Z_DOUBLE_VDB
+    help
+      lvgl zephyr driver spd2010 thread priority

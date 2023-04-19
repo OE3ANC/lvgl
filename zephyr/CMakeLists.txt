@@ -201,7 +201,7 @@ zephyr_library_sources(
     lvgl_display_mono.c
 )
 
-zephyr_library_sources_ifdef(CONFIG_SPD2010 lvgl_display_driver_spd2010.c)
+zephyr_library_sources_ifdef(CONFIG_LV_Z_DRIVER_SPD2010 lvgl_display_driver_spd2010.c)
 zephyr_library_sources_ifdef(CONFIG_LV_Z_USE_FILESYSTEM lvgl_fs.c)
 zephyr_library_sources_ifdef(CONFIG_LV_Z_MEM_POOL_SYS_HEAP lvgl_mem.c)
 
