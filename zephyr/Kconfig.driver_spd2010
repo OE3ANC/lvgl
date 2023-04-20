@@ -4,6 +4,20 @@ config LV_Z_DRIVER_SPD2010
     help
        lvgl zephyr driver spd2010
 
+config LV_Z_DRIVER_SPD2010_FULL_REFRESH
+    bool "lvgl zephyr driver spd2010 full refresh"
+    default n
+    depends on LV_Z_DRIVER_SPD2010
+    help
+       lvgl zephyr driver spd2010 full refresh
+
+config LV_Z_DRIVER_SPD2010_ROTATE_90
+    bool "lvgl zephyr driver spd2010 rotation 90"
+    default y
+    depends on LV_Z_DRIVER_SPD2010
+    help
+       lvgl zephyr driver spd2010 rotation 90
+
 config LV_Z_DRIVER_SPD2010_THREAD_PRIORITY
     int "lvgl zephyr driver spd2010 thread priority"
     default 0
