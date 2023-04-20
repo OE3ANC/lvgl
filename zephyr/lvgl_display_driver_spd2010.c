@@ -111,6 +111,14 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 
 	display_get_capabilities(display_dev, &cap);
 
+#if CONFIG_LV_Z_DRIVER_SPD2010_FULL_REFRESH
+	disp_drv->full_refresh = 1;
+#endif
+
+#if CONFIG_LV_Z_DRIVER_SPD2010_ROTATE_90
+	disp_drv->rotated = LV_DISP_ROT_90;
+#endif
+
 	switch (cap.current_pixel_format) {
 	case PIXEL_FORMAT_RGB_565:
 	case PIXEL_FORMAT_BGR_565:
