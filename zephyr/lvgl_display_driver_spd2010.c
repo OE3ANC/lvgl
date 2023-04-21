@@ -40,10 +40,11 @@ static void flush_thread(void *p1, void *p2, void *p3)
 		desc.height = h;
 		display_write(msg.display_dev, msg.area.x1, msg.area.y1, &desc,
 			      (void *)msg.color_p);
+		lv_disp_flush_ready(msg.disp_drv);
 	}
 }
 
-K_THREAD_DEFINE(flush_thread_id, 2048, flush_thread, NULL, NULL, NULL, LV_Z_DRIVER_SPD2010_THREAD_PRIORITY, 0, 0);
+K_THREAD_DEFINE(flush_thread_id, 2048, flush_thread, NULL, NULL, NULL, CONFIG_LV_Z_DRIVER_SPD2010_THREAD_PRIORITY, 0, 0);
 #endif
 
 void lvgl_flush_cb_16bit_spd2010(lv_disp_drv_t *disp_drv, const lv_area_t *area,
@@ -74,7 +75,6 @@ void lvgl_flush_cb_16bit_spd2010(lv_disp_drv_t *disp_drv, const lv_area_t *area,
 	msg.disp_drv = disp_drv;
 
 	k_msgq_put(&flush_msgq, &msg, K_FOREVER);
-	lv_disp_flush_ready(disp_drv);
 #endif
 }
 
