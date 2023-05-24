@@ -119,7 +119,7 @@ static int lvgl_allocate_rendering_buffers(lv_disp_drv_t *disp_drv)
 {
 	void *buf0 = NULL;
 	void *buf1 = NULL;
-	uint16_t buf_nbr_pixels;
+	uint32_t buf_nbr_pixels;
 	uint32_t buf_size;
 	struct display_capabilities cap;
 	const struct device *display_dev = (const struct device *)disp_drv->user_data;
