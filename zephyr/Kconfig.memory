@@ -51,6 +51,19 @@ config LV_Z_MEM_POOL_NUMBER_BLOCKS
 	help
 	  Number of maximum sized blocks in the memory pool.
 
+config LV_Z_MEM_CUSTOM_SECTION
+	bool "Custom section"
+	default n
+	help
+	  Custom section
+
+config LV_Z_MEM_CUSTOM_SECTION_NAME
+	string "Custom section name"
+	default ".bss"
+	depends on LV_Z_MEM_CUSTOM_SECTION
+	help
+	  Custom section name
+
 endif
 
 config LV_Z_VDB_SIZE

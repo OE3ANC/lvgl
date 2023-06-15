@@ -1,0 +1,34 @@
+config LV_Z_DRIVER_CSK6_16BIT
+    bool "lvgl zephyr driver csk6 16bit"
+    default n
+    help
+       lvgl zephyr driver csk6 16bit
+
+config LV_Z_DRIVER_CSK6_16BIT_FULL_REFRESH
+    bool "lvgl zephyr driver csk6 16bit full refresh"
+    default n
+    depends on LV_Z_DRIVER_CSK6_16BIT
+    help
+       lvgl zephyr driver csk6 16bit full refresh
+
+config LV_Z_DRIVER_CSK6_16BIT_ROTATE_90
+    bool "lvgl zephyr driver csk6 16bit rotation 90"
+    default n
+    depends on LV_Z_DRIVER_CSK6_16BIT
+    help
+       lvgl zephyr driver csk6 16bit rotation 90
+
+config LV_Z_DRIVER_CSK6_16BIT_THREAD_PRIORITY
+    int "lvgl zephyr driver csk6 16bit thread priority"
+    default 0
+    depends on LV_Z_DOUBLE_VDB
+    help
+      lvgl zephyr driver csk6 16bit thread priority
+
+config LV_Z_DRIVER_CSK6_PIXEL_ALIGN_SIZE
+    int "lvgl zephyr driver csk6 pixel alignment size"
+    default 1
+
+config LV_Z_DRIVER_CSK6_KSAN_FILTER_TIME_MS
+    int "lvgl zephyr driver csk6 kscan filter time ms"
+    default 0
