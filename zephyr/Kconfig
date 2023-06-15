@@ -22,5 +22,6 @@ rsource "../Kconfig"
 rsource "Kconfig.graphical"
 rsource "Kconfig.memory"
 rsource "Kconfig.input"
+rsource "Kconfig.driver_csk6_16bit"
 
 endif

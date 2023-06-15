@@ -6,7 +6,7 @@
 
 #include "lvgl_display.h"
 
-int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
+__attribute__((weak)) int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 {
 	int err = 0;
 	const struct device *display_dev = (const struct device *)disp_drv->user_data;
