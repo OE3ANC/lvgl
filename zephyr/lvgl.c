@@ -313,7 +313,7 @@ set_and_release:
 static int lvgl_pointer_kscan_init(void)
 {
 	const struct device *kscan_dev =
-		device_get_binding(CONFIG_LV_Z_POINTER_KSCAN_DEV_NAME);
+		DEVICE_DT_GET(DT_CHOSEN(zephyr_keyboard_scan));
 
 	if (kscan_dev == NULL) {
 		LOG_ERR("Keyboard scan device not found.");
@@ -340,12 +340,10 @@ static int lvgl_pointer_kscan_init(void)
 }
 #endif /* CONFIG_LV_Z_POINTER_KSCAN */
 
-static int lvgl_init(const struct device *dev)
+static int lvgl_init(void)
 {
-	ARG_UNUSED(dev);
-
 	const struct device *display_dev =
-		device_get_binding(CONFIG_LV_Z_DISPLAY_DEV_NAME);
+		DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
 	int err = 0;
 
 	if (display_dev == NULL) {

@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#include <zephyr/kernel.h>
 #include "lvgl_display.h"
 
 __attribute__((weak)) int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
