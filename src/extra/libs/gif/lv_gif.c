@@ -99,6 +99,8 @@ void lv_gif_restart(lv_obj_t * obj)
 {
     lv_gif_t * gifobj = (lv_gif_t *) obj;
     gd_rewind(gifobj->gif);
+    lv_timer_resume(gifobj->timer);
+    lv_timer_reset(gifobj->timer);
 }
 
 /**********************
@@ -111,6 +113,7 @@ static void lv_gif_constructor(const lv_obj_class_t * class_p, lv_obj_t * obj)
 
     lv_gif_t * gifobj = (lv_gif_t *) obj;
 
+    gifobj->gif = NULL;
     gifobj->timer = lv_timer_create(next_frame_task_cb, 10, obj);
     lv_timer_pause(gifobj->timer);
 }
@@ -119,8 +122,11 @@ static void lv_gif_destructor(const lv_obj_class_t * class_p, lv_obj_t * obj)
 {
     LV_UNUSED(class_p);
     lv_gif_t * gifobj = (lv_gif_t *) obj;
+
     lv_img_cache_invalidate_src(&gifobj->imgdsc);
-    gd_close_gif(gifobj->gif);
+
+    if(gifobj->gif)
+        gd_close_gif(gifobj->gif);
     lv_timer_del(gifobj->timer);
 }
 
@@ -138,6 +144,7 @@ static void next_frame_task_cb(lv_timer_t * t)
         /*It was the last repeat*/
         if(gifobj->gif->loop_count == 1) {
             lv_res_t res = lv_event_send(obj, LV_EVENT_READY, NULL);
+            lv_timer_pause(t);
             if(res != LV_FS_RES_OK) return;
         }
         else {
