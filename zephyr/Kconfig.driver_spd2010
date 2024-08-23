@@ -24,3 +24,7 @@ config LV_Z_DRIVER_SPD2010_THREAD_PRIORITY
     depends on LV_Z_DOUBLE_VDB
     help
       lvgl zephyr driver spd2010 thread priority
+
+config LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE
+    int "lvgl zephyr driver pixel alignment size"
+    default 4

@@ -90,16 +90,16 @@ void lvgl_set_px_cb_16bit_spd2010(lv_disp_drv_t *disp_drv, uint8_t *buf, lv_coor
 void lvgl_rounder_cb_16bit_spd2010(struct _lv_disp_drv_t *disp_drv, lv_area_t *area)
 {
 	if (disp_drv->rotated == LV_DISP_ROT_90 || disp_drv->rotated == LV_DISP_ROT_270) {
-		area->y1 = ROUND_DOWN(area->y1, 4);
-		area->y2 = ROUND_UP(area->y2, 4) - 1;
-		area->x1 = ROUND_DOWN(area->x1, 4);
-		area->x2 = ROUND_UP(area->x2, 4) - 1;
+		area->y1 = ROUND_DOWN(area->y1, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE);
+		area->y2 = ROUND_UP(area->y2, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE) - 1;
+		area->x1 = ROUND_DOWN(area->x1, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE);
+		area->x2 = ROUND_UP(area->x2, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE) - 1;
 	} else if (disp_drv->rotated == LV_DISP_ROT_NONE) {
-		area->x1 = ROUND_DOWN(area->x1, 4);
-		area->x2 = ROUND_UP(area->x2, 4) - 1;
+		area->x1 = ROUND_DOWN(area->x1, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE);
+		area->x2 = ROUND_UP(area->x2, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE) - 1;
 	} else if (disp_drv->rotated == LV_DISP_ROT_180) {
-		area->x1 = ROUND_DOWN(area->x1, 4);
-		area->x2 = ROUND_UP(area->x2, 4) - 1;
+		area->x1 = ROUND_DOWN(area->x1, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE);
+		area->x2 = ROUND_UP(area->x2, CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE) - 1;
 	}
 }
 
@@ -123,7 +123,9 @@ int set_lvgl_rendering_cb(lv_disp_drv_t *disp_drv)
 	case PIXEL_FORMAT_RGB_565:
 	case PIXEL_FORMAT_BGR_565:
 		disp_drv->flush_cb = lvgl_flush_cb_16bit_spd2010;
+#if CONFIG_LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE > 1
 		disp_drv->rounder_cb = lvgl_rounder_cb_16bit_spd2010;
+#endif
 #ifdef CONFIG_LV_COLOR_DEPTH_16
 		disp_drv->set_px_cb = NULL;
 #else
