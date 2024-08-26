@@ -28,3 +28,7 @@ config LV_Z_DRIVER_SPD2010_THREAD_PRIORITY
 config LV_Z_DRIVER_SPD2010_PIXEL_ALIGN_SIZE
     int "lvgl zephyr driver pixel alignment size"
     default 4
+
+config LV_Z_DRIVER_CSK6_KSAN_FILTER_TIME_MS
+    int "lvgl zephyr driver csk6 kscan filter time ms"
+    default 0

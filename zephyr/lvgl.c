@@ -197,9 +197,28 @@ static void lvgl_pointer_kscan_callback(const struct device *dev,
 		.state = pressed ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL,
 	};
 
+#if CONFIG_LV_Z_DRIVER_CSK6_KSAN_FILTER_TIME_MS > 0
+	static uint32_t report_last_time = 0;
+	uint32_t curr_time = k_uptime_get_32();
+
+	if (pressed) {
+		if ((curr_time - report_last_time) > CONFIG_LV_Z_DRIVER_CSK6_KSAN_FILTER_TIME_MS) {
+			if (k_msgq_put(&kscan_msgq, &data, K_NO_WAIT) != 0) {
+				LOG_DBG("Could not put input data into queue");
+			}
+			report_last_time = curr_time;
+		}
+	} else {
+		if (k_msgq_put(&kscan_msgq, &data, K_NO_WAIT) != 0) {
+			LOG_DBG("Could not put input data into queue");
+		}
+		report_last_time = curr_time;
+	}
+#else
 	if (k_msgq_put(&kscan_msgq, &data, K_NO_WAIT) != 0) {
 		LOG_DBG("Could not put input data into queue");
 	}
+#endif
 }
 
 static void lvgl_pointer_kscan_read(lv_indev_drv_t *drv, lv_indev_data_t *data)
