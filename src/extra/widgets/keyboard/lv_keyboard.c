@@ -1,4 +1,3 @@
-
 /**
  * @file lv_keyboard.c
  *
@@ -52,7 +51,7 @@ static const char * const default_kb_map_lc[] = {"1#", "q", "w", "e", "r", "t", 
                                                  LV_SYMBOL_KEYBOARD, LV_SYMBOL_LEFT, " ", LV_SYMBOL_RIGHT, LV_SYMBOL_OK, ""
                                                 };
 
-static const lv_btnmatrix_ctrl_t default_kb_ctrl_lc_map[] = {
+static const lv_btnmatrix_ctrl_t default_kb_ctrl_lc_map[] = {   
     LV_KEYBOARD_CTRL_BTN_FLAGS | 5, LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_KB_BTN(4), LV_BTNMATRIX_CTRL_CHECKED | 7,
     LV_KEYBOARD_CTRL_BTN_FLAGS | 6, LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_KB_BTN(3), LV_BTNMATRIX_CTRL_CHECKED | 7,
     LV_BTNMATRIX_CTRL_CHECKED | LV_KB_BTN(1), LV_BTNMATRIX_CTRL_CHECKED | LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_BTNMATRIX_CTRL_CHECKED | LV_KB_BTN(1), LV_BTNMATRIX_CTRL_CHECKED | LV_KB_BTN(1), LV_BTNMATRIX_CTRL_CHECKED | LV_KB_BTN(1),
@@ -79,7 +78,7 @@ static const char * const default_kb_map_spec[] = {"1", "2", "3", "4", "5", "6",
                                                   };
 
 static const lv_btnmatrix_ctrl_t default_kb_ctrl_spec_map[] = {
-    LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_BTNMATRIX_CTRL_CHECKED | 2,
+    LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_BTNMATRIX_CTRL_CHECKED | 1,
     LV_KEYBOARD_CTRL_BTN_FLAGS | 2, LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1),
     LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1), LV_KB_BTN(1),
     LV_KEYBOARD_CTRL_BTN_FLAGS | 2, LV_BTNMATRIX_CTRL_CHECKED | 2, 6, LV_BTNMATRIX_CTRL_CHECKED | 2, LV_KEYBOARD_CTRL_BTN_FLAGS | 2
@@ -134,11 +133,34 @@ static const lv_btnmatrix_ctrl_t * kb_ctrl[9] = {
  * @param parent pointer to an object, it will be the parent of the new keyboard
  * @return pointer to the created keyboard
  */
+
+static lv_style_t style_btn;
+static lv_style_t style_kb_main;
 lv_obj_t * lv_keyboard_create(lv_obj_t * parent)
 {
     LV_LOG_INFO("begin");
     lv_obj_t * obj = lv_obj_class_create_obj(&lv_keyboard_class, parent);
     lv_obj_class_init_obj(obj);
+
+    lv_style_init(&style_btn);
+    lv_style_init(&style_kb_main);
+
+    /* 设置边框颜色 */
+    lv_style_set_border_color(&style_btn, lv_color_hex(0x808080));  // 灰色边框
+    lv_style_set_border_width(&style_btn, 1);                       // 边框宽度 2px
+    lv_style_set_border_opa(&style_btn, LV_OPA_80);    // 80% 不透明度
+
+
+    lv_style_set_pad_row(&style_kb_main, 0);    // 键盘行间距
+    lv_style_set_pad_column(&style_kb_main, 0); // 键盘列间距
+    lv_style_set_bg_opa(&style_kb_main, LV_OPA_COVER); //设置背景不透明度
+    
+    /* 将样式应用到键盘的所有按钮 */
+    lv_obj_add_style(obj, &style_btn, LV_PART_ITEMS);
+
+    /* 将样式应用到按钮矩阵的主部件（LV_PART_MAIN） */
+    lv_obj_add_style(obj, &style_kb_main, LV_PART_MAIN );
+
     return obj;
 }
 
