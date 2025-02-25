@@ -304,6 +304,11 @@ static void lvgl_pointer_kscan_read(lv_indev_drv_t *drv, lv_indev_data_t *data)
         prev.point.y = cap.y_resolution - 1;
     }
 
+    /* print touch coordinates */
+    if (prev.state == LV_INDEV_STATE_PR) {
+        LOG_INF("Touch at X:%d Y:%d", prev.point.x, prev.point.y);
+    }
+
 set_and_release:
 	*data = prev;
 
