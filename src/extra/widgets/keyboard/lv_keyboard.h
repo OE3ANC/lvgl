@@ -185,3 +185,9 @@ void lv_keyboard_def_event_cb(lv_event_t * e);
 #endif
 
 #endif /*LV_KEYBOARD_H*/
+
+#ifdef CONFIG_LVGL_CUSTOM_KEYBOARD
+#define CREATE_CUSTOM_KEYBOARD(parent) lv_keyboard_create_new(parent)
+#else
+#define CREATE_CUSTOM_KEYBOARD(parent) lv_keyboard_create(parent)
+#endif
