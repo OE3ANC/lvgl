@@ -202,6 +202,11 @@ menu "LVGL configuration"
                 default 10240
                 help
                     Only used if software rotation is enabled in the display driver.
+            
+            config LVGL_CUSTOM_KEYBOARD
+                bool "Enable custom keyboard creation macro"
+                default n
+                       
         endmenu
 
         menu "GPU"
