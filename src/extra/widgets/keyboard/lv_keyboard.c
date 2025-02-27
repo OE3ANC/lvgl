@@ -134,36 +134,35 @@ static const lv_btnmatrix_ctrl_t * kb_ctrl[9] = {
  * @param parent pointer to an object, it will be the parent of the new keyboard
  * @return pointer to the created keyboard
  */
-
-static lv_style_t style_btn;
-static lv_style_t style_kb_main;
-lv_obj_t * lv_keyboard_create(lv_obj_t * parent)
-{
-    LV_LOG_INFO("begin");
-    lv_obj_t * obj = lv_obj_class_create_obj(&lv_keyboard_class, parent);
-    lv_obj_class_init_obj(obj);
-
-    lv_style_init(&style_btn);
-    lv_style_init(&style_kb_main);
-
-    /* 设置边框颜色 */
-    lv_style_set_border_color(&style_btn, lv_color_hex(0x808080));  // 灰色边框
-    lv_style_set_border_width(&style_btn, 1);                       // 边框宽度 2px
-    lv_style_set_border_opa(&style_btn, LV_OPA_80);    // 80% 不透明度
-
-
-    lv_style_set_pad_row(&style_kb_main, 0);    // 键盘行间距
-    lv_style_set_pad_column(&style_kb_main, 0); // 键盘列间距
-    lv_style_set_bg_opa(&style_kb_main, LV_OPA_COVER); //设置背景不透明度
-    
-    /* 将样式应用到键盘的所有按钮 */
-    lv_obj_add_style(obj, &style_btn, LV_PART_ITEMS);
-
-    /* 将样式应用到按钮矩阵的主部件（LV_PART_MAIN） */
-    lv_obj_add_style(obj, &style_kb_main, LV_PART_MAIN );
-
-    return obj;
-}
+ lv_obj_t * lv_keyboard_create(lv_obj_t * parent)
+ {
+     LV_LOG_INFO("begin");
+     lv_obj_t * obj = lv_obj_class_create_obj(&lv_keyboard_class, parent);
+     lv_obj_class_init_obj(obj);
+     #ifdef CONFIG_LVGL_CUSTOM_KEYBOARD
+         static lv_style_t style_btn;
+         static lv_style_t style_kb_main;    
+         lv_style_init(&style_btn);
+         lv_style_init(&style_kb_main);
+ 
+         /* 设置边框颜色 */
+         lv_style_set_border_color(&style_btn, lv_color_hex(0x808080));  // 灰色边框
+         lv_style_set_border_width(&style_btn, 1);                       // 边框宽度 2px
+         lv_style_set_border_opa(&style_btn, LV_OPA_80);    // 80% 不透明度
+ 
+ 
+         lv_style_set_pad_row(&style_kb_main, 0);    // 键盘行间距
+         lv_style_set_pad_column(&style_kb_main, 0); // 键盘列间距
+         lv_style_set_bg_opa(&style_kb_main, LV_OPA_COVER); //设置背景不透明度
+     
+         /* 将样式应用到键盘的所有按钮 */
+         lv_obj_add_style(obj, &style_btn, LV_PART_ITEMS);
+ 
+         /* 将样式应用到按钮矩阵的主部件（LV_PART_MAIN） */
+         lv_obj_add_style(obj, &style_kb_main, LV_PART_MAIN );
+     #endif
+     return obj;
+ }
 
 /*=====================
  * Setter functions
